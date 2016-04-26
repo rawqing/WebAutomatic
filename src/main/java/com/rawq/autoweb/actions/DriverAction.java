@@ -374,4 +374,14 @@ public class DriverAction  {
 			return false;
 		}
 	}
+	
+	public boolean in(WElement wElement,String data){
+		try {
+			data = data == null ? "" : data;
+			String str = this.getText(wElement);
+			return data.equals(str);
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }
