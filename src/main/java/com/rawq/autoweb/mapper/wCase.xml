@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rawq.autoweb.service.IWCase">
+
+	<select id="getWCaseById" parameterType="int" resultMap="getWCase">
+		SELECT
+			c.*, s.id AS s_id,
+			s.caseID AS s_caseID,
+			s.description AS s_description,
+			s.pageAlias AS s_pageAlias,
+			s.step AS s_step,
+			s.expectation AS s_expectation,
+			s.createTime AS s_createTime,
+			s.updateTime AS s_updateTime,
+			s.version AS s_version,
+			s.author AS s_author,
+			d.id AS d_id,
+			d.caseId AS d_caseId,
+			d.parameValue AS d_parameValue,
+			d.expect AS d_expect,
+			d.createTime AS d_createTime,
+			d.updateTime AS d_updateTime,
+			d.`level` AS d_level
+		FROM
+			w_case c
+		LEFT JOIN w_step s ON c.id = s.caseID
+		LEFT JOIN w_data d ON s.caseID = d.caseId
+		where c.id = #{id} 
+	</select>
+	
+	<select id="getWCaseByName" parameterType="String" resultMap="getWCase">
+		SELECT
+			c.*, s.id AS s_id,
+			s.caseID AS s_caseID,
+			s.description AS s_description,
+			s.pageAlias AS s_pageAlias,
+			s.step AS s_step,
+			s.expectation AS s_expectation,
+			s.createTime AS s_createTime,
+			s.updateTime AS s_updateTime,
+			s.version AS s_version,
+			s.author AS s_author,
+			d.id AS d_id,
+			d.caseId AS d_caseId,
+			d.parameValue AS d_parameValue,
+			d.expect AS d_expect,
+			d.createTime AS d_createTime,
+			d.updateTime AS d_updateTime,
+			d.`level` AS d_level
+		FROM
+			w_case c
+		LEFT JOIN w_step s ON c.id = s.caseID
+		LEFT JOIN w_data d ON s.caseID = d.caseId
+		where c.caseName = #{caseName}
+	</select>
+	
+	<select id="getWCaseByIdList" parameterType="list" resultMap="getWCase">
+	    SELECT
+			c.*, s.id AS s_id,
+			s.caseID AS s_caseID,
+			s.description AS s_description,
+			s.pageAlias AS s_pageAlias,
+			s.step AS s_step,
+			s.expectation AS s_expectation,
+			s.createTime AS s_createTime,
+			s.updateTime AS s_updateTime,
+			s.version AS s_version,
+			s.author AS s_author,
+			d.id AS d_id,
+			d.caseId AS d_caseId,
+			d.parameValue AS d_parameValue,
+			d.expect AS d_expect,
+			d.createTime AS d_createTime,
+			d.updateTime AS d_updateTime,
+			d.`level` AS d_level
+		FROM
+			w_case c
+		LEFT JOIN w_step s ON c.id = s.caseID
+		LEFT JOIN w_data d ON s.caseID = d.caseId
+		where c.id in
+		<foreach collection="list" item="item" open="(" separator="," close=")">
+		    #{item}
+		</foreach>
+	</select>
+	
+	<select id="getWPlanById" parameterType="int" resultMap="getWPlan">
+	    select 
+			p.*,
+			s.id as s_id,
+			s.suietName as s_suietName,
+			s.caseList as s_caseList,
+			s.version as s_version,
+			s.description as s_description,
+			s.createTime as s_createTime,
+			s.updateTime as s_updateTime,
+			s.author as s_author
+		from w_plan p,
+			w_suite s
+		where 
+			p.id=s.planId
+		and 
+			p.id=#{id}
+	</select>
+	
+	
+	<insert id="addWCase" parameterType="WCase" useGeneratedKeys="true" keyProperty="id">
+		insert into 
+			w_case(
+				premise,
+				module,
+				caseName,
+				priority,
+				createTime,
+				updateTime,
+				version,
+				author,
+				description,
+				caseNumber) 
+			values(
+				#{premise},
+				#{module},
+				#{caseName},
+				#{priority},
+				now(),
+				now(),
+				#{version},
+				#{author},
+				#{description},
+				#{caseNumber})
+	</insert>
+	
+	<insert id="addWStep" parameterType="WStep" >
+		insert into 
+			w_step(
+				caseID,
+				description,
+				pageAlias,
+				step,
+				expectation,
+				createTime,
+				updateTime,
+				version,
+				author) 
+			values(
+				#{caseID},
+				#{description},
+				#{pageAlias},
+				#{step},
+				#{expectation},
+				now(),
+				now(),
+				#{version},
+				#{author})
+	</insert>
+	
+	<insert id="addWStepList" parameterType="WStep">
+		insert into 
+			w_step(
+				caseID,
+				description,
+				pageAlias,
+				step,
+				expectation,
+				createTime,
+				updateTime,
+				version,
+				author) 
+			values
+			<foreach collection="list" item="item" separator=",">
+			   (#{item.caseID},
+				#{item.description},
+				#{item.pageAlias},
+				#{item.step},
+				#{item.expectation},
+				now(),
+				now(),
+				#{item.version},
+				#{item.author})
+			</foreach>
+			
+	</insert>
+	
+	<insert id="addWPlan" parameterType="WPlan" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO w_plan (
+			planName,
+			commitVersion,
+			description,
+			planExecutionTime,
+			createTime,
+			author
+		)
+		VALUES
+		(
+			#{planName},
+			#{commitVersion},
+			#{description},
+			#{planExecutionTime},
+			now(),
+			#{author}	
+		)
+	</insert>
+	<insert id="addWSuiteList" parameterType="WSuite">
+	    INSERT INTO w_suite (
+			suietName,
+			planId,
+			caseList,
+			version,
+			description,
+			createTime,
+			updateTime,
+			author
+		)
+		VALUES
+		<foreach collection="list" item="item" separator=","></foreach>
+		(
+			#{item.suietName},
+			#{item.planId},
+			#{item.caseList},
+			#{item.version},
+			#{item.description},
+			NOW(),
+			NOW(),
+			#{item.author}
+		)
+	</insert>
+	
+	<insert id="addWSuite" parameterType="WSuite">
+	    INSERT INTO w_suite (
+			suietName,
+			planId,
+			caseList,
+			version,
+			description,
+			createTime,
+			updateTime,
+			author
+		)
+		VALUES
+		(
+			#{suietName},
+			#{planId},
+			#{caseList},
+			#{version},
+			#{description},
+			NOW(),
+			NOW(),
+			#{author}
+		)
+	</insert>
+	
+	<resultMap type="WCase" id="getWCase">
+	    <id property="id" column="id"/>
+	    <result property="caseNumber" column="caseNumber"/>
+	    <result property="author" column="author"/>
+	    <result property="caseName" column="caseName"/>
+	    <result property="createTime" column="createTime"/>
+	    <result property="description" column="description"/>
+	    <result property="module" column="module"/>
+	    <result property="premise" column="premise"/>
+	    <result property="priority" column="priority"/>
+	    <result property="updateTime" column="updateTime"/>
+	    <result property="version" column="version"/>
+	    <collection property="wSteps" ofType="WStep">
+	        <id property="id" column="s_id"/>
+	        <result property="pageAlias" column="s_pageAlias"/>
+	        <result property="author" column="s_author"/>
+	        <result property="createTime" column="s_createTime"/>
+	        <result property="description" column="s_description"/>
+	        <result property="expectation" column="s_expectation"/>
+	        <result property="step" column="s_step"/>
+	        <result property="updateTime" column="s_updateTime"/>
+	        <result property="version" column="s_version"/>
+	        <result property="caseID" column="s_caseID"/>
+	    </collection>
+	    <collection property="wDatas" ofType="WData">
+	    	<id property="id" column="d_id"/>
+	    	<result property="caseId" column="d_caseId"/>
+	    	<result property="parameValue" column="d_parameValue"/>
+	    	<result property="expect" column="d_expect"/>
+	    	<result property="createTime" column="d_createTime"/>
+	    	<result property="updateTime" column="d_updateTime"/>
+	    	<result property="level" column="d_level"/>
+	    </collection>
+	</resultMap>
+	
+	<resultMap type="WPlan" id="getWPlan">
+	    <id property="id" column="id"/>
+	    <result property="planName" column="planName"/>
+	    <result property="commitVersion" column="commitVersion"/>
+	    <result property="description" column="description"/>
+	    <result property="planExecutionTime" column="planExecutionTime"/>
+	    <result property="createTime" column="createTime"/>
+	    <result property="author" column="author"/>
+	    <collection property="wSuites" ofType="WSuite">
+	        <id property="id" column="s_id"/>
+	        <result property="suietName" column="s_suietName"/>
+	        <result property="caseList" column="s_caseList"/>
+	        <result property="version" column="s_version"/>
+	        <result property="description" column="s_description"/>
+	        <result property="createTime" column="s_createTime"/>
+	        <result property="updateTime" column="s_updateTime"/>
+	        <result property="author" column="author"/>
+	    </collection>
+	</resultMap>
+	
+</mapper>

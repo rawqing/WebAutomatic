@@ -1,0 +1,8 @@
+id
+linkText
+partialLinkText
+name
+tagName
+xpath
+className
+cssSelector

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rawq.autoweb.service.IWPage">
+	
+	<select id="getWPageById" parameterType="int" resultMap="getWPage">
+	    select
+			p.*,
+			e.id as e_id,
+			e.elememtName as e_elememtName,
+			e.description as e_description
+		from 
+			w_page p, w_element e
+		where
+			p.id=e.pageID
+		AND
+			p.id=#{id}
+	    
+	</select>
+	<select id="getWPageByAlias" parameterType="String" resultMap="getWPage">
+	    select
+			p.*,
+			e.id as e_id,
+			e.elememtName as e_elememtName,
+			e.description as e_description
+		from 
+			w_page p, w_element e
+		where
+			p.id=e.pageID
+		AND
+			p.alias=#{alias}
+	</select>
+	<select id="getWPageIdByAlias" parameterType="String" resultType="int">
+	    select id from w_page where alias=#{alias}
+	</select>
+	
+	<select id="getPageMapList" resultType="HashMap">
+		select id ,alias from webauto.w_page
+	</select>
+	
+	<insert id="addWPage" parameterType="WPage" >
+	    insert into 
+			w_page(
+				alias,
+				title,
+				uri) 
+			values(
+				#{alias},
+				#{title},
+				#{uri})
+	</insert>
+	
+	<insert id="addWPageList" parameterType="WPage" >
+	    insert into 
+			w_page(
+				alias,
+				title,
+				uri) 
+			values
+			<foreach collection="list" item="item" separator=",">
+			   (#{item.alias},
+				#{item.title},
+				#{item.uri})
+			</foreach>
+	</insert>
+	
+	<resultMap type="WPage" id="getWPage">
+	    <id property="id" column="id"/>
+	    <result property="alias" column="alias"/>
+	    <result property="title" column="title"/>
+	    <result property="uri" column="uri"/>
+	    <collection property="WElements" ofType="WElement">
+	        <id property="id" column="e_id"/>
+	        <result property="elememtName" column="e_elememtName"/>
+	        <result property="description" column="e_description"/>
+	    </collection>
+	</resultMap>
+	
+	
+</mapper>

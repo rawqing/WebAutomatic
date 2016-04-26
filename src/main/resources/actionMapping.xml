@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappingset>
+    <mapping key="点击" action="click" />
+    <mapping key="输入" action="sendKeys" />
+</mappingset>

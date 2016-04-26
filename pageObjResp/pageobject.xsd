@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 	
+		targetNamespace="http://www.example.org/pageobject" 
+		xmlns:tns="http://www.example.org/pageobject" elementFormDefault="qualified">
+		
+	<element name="elements">
+		<complexType>
+			<sequence maxOccurs="unbounded">
+				<element name="element">
+					<complexType>
+						<simpleContent>
+							<extension base="string">
+								<attributeGroup ref="tns:att"></attributeGroup>
+							</extension>
+						</simpleContent>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+	
+	<!-- 定义属性组 -->
+	<attributeGroup name="att">
+		<attribute name="name" type="string" use="required"></attribute>
+		<attribute name="type" use="required" >
+			<simpleType>
+				<restriction base="tns:findtype"></restriction>
+			</simpleType>
+		</attribute>
+		<attribute name="tag" type="string" ></attribute>
+		<attribute name="description" type="string"></attribute>
+	</attributeGroup>
+	
+	<!-- 定义一个约束序列 -->
+	<simpleType name="findtype">
+		<restriction base="string">
+			<enumeration value="id"></enumeration>
+			<enumeration value="name"></enumeration>
+			<enumeration value="xpath"></enumeration>
+			<enumeration value="cssSelector"></enumeration>
+			<enumeration value="linkText"></enumeration>
+		</restriction>
+	</simpleType>
+</schema>

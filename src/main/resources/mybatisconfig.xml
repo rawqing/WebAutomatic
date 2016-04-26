@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+	    <package name="com.rawq.autoweb.domain"/>
+	</typeAliases>
+	
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://192.168.1.205:3306/webauto?useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"/>
+				<property name="username" value="root"/>
+				<property name="password" value="123456"/>
+			</dataSource>
+		</environment>	
+	</environments>	
+	
+	<mappers>
+		<mapper resource="com/rawq/autoweb/mapper/wCase.xml"/>
+		<mapper resource="com/rawq/autoweb/mapper/wElement.xml"/>
+		<mapper resource="com/rawq/autoweb/mapper/wPage.xml"/>
+		<mapper resource="com/rawq/autoweb/mapper/wTestre.xml"/>
+		<mapper resource="com/rawq/autoweb/mapper/wZentaobug.xml"/>
+		
+	</mappers>
+</configuration>	
+	

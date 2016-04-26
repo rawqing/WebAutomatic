@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rawq.autoweb.service.IWTestre">
+	
+	<resultMap id="BaseResultMap" type="WTestre" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="testNumber" property="testNumber" jdbcType="VARCHAR" />
+    <result column="planId" property="planId" jdbcType="INTEGER" />
+    <result column="suiteId" property="suiteId" jdbcType="INTEGER" />
+    <result column="caseId" property="caseId" jdbcType="INTEGER" />
+    <result column="steepId" property="steepId" jdbcType="INTEGER" />
+    <result column="useData" property="useData" jdbcType="VARCHAR" />
+    <result column="expected" property="expected" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="INTEGER" />
+    <result column="actual" property="actual" jdbcType="VARCHAR" />
+    <result column="testTime" property="testTime" jdbcType="TIMESTAMP" />
+    <result column="bugId" property="bugId" jdbcType="INTEGER" />
+    <result column="printscreenPath" property="printscreenPath" jdbcType="VARCHAR" />
+    <result column="tester" property="tester" jdbcType="VARCHAR" />
+    <result column="priority" property="priority" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, testNumber, planId, suiteId, caseId, steepId, useData, expected, result, actual, 
+    testTime, bugId, printscreenPath, tester, priority
+  </sql>
+  <select id="getWTestreById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from w_testres
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="delWTestreById" parameterType="java.lang.Integer" >
+    delete from w_testres
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="addWTestre" parameterType="WTestre" useGeneratedKeys="true" keyProperty="id">
+    insert into w_testres (id, testNumber, planId, 
+      suiteId, caseId, steepId, 
+      useData, expected, result, 
+      actual, testTime, bugId, 
+      printscreenPath, tester, priority
+      )
+    values (#{id,jdbcType=INTEGER}, #{testNumber,jdbcType=VARCHAR}, #{planId,jdbcType=INTEGER}, 
+      #{suiteId,jdbcType=INTEGER}, #{caseId,jdbcType=INTEGER}, #{steepId,jdbcType=INTEGER}, 
+      #{useData,jdbcType=VARCHAR}, #{expected,jdbcType=VARCHAR}, #{result,jdbcType=INTEGER}, 
+      #{actual,jdbcType=VARCHAR}, NOW(), #{bugId,jdbcType=INTEGER}, 
+      #{printscreenPath,jdbcType=VARCHAR}, #{tester,jdbcType=VARCHAR}, #{priority,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="addWTestreSelective" parameterType="WTestre" useGeneratedKeys="true" keyProperty="id">
+    insert into w_testres
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="testNumber != null" >
+        testNumber,
+      </if>
+      <if test="planId != null" >
+        planId,
+      </if>
+      <if test="suiteId != null" >
+        suiteId,
+      </if>
+      <if test="caseId != null" >
+        caseId,
+      </if>
+      <if test="steepId != null" >
+        steepId,
+      </if>
+      <if test="useData != null" >
+        useData,
+      </if>
+      <if test="expected != null" >
+        expected,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="actual != null" >
+        actual,
+      </if>
+      <if test="testTime != null" >
+        testTime,
+      </if>
+      <if test="bugId != null" >
+        bugId,
+      </if>
+      <if test="printscreenPath != null" >
+        printscreenPath,
+      </if>
+      <if test="tester != null" >
+        tester,
+      </if>
+      <if test="priority != null" >
+        priority,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="testNumber != null" >
+        #{testNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="planId != null" >
+        #{planId,jdbcType=INTEGER},
+      </if>
+      <if test="suiteId != null" >
+        #{suiteId,jdbcType=INTEGER},
+      </if>
+      <if test="caseId != null" >
+        #{caseId,jdbcType=INTEGER},
+      </if>
+      <if test="steepId != null" >
+        #{steepId,jdbcType=INTEGER},
+      </if>
+      <if test="useData != null" >
+        #{useData,jdbcType=VARCHAR},
+      </if>
+      <if test="expected != null" >
+        #{expected,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="actual != null" >
+        #{actual,jdbcType=VARCHAR},
+      </if>
+      <if test="testTime != null" >
+        #{testTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bugId != null" >
+        #{bugId,jdbcType=INTEGER},
+      </if>
+      <if test="printscreenPath != null" >
+        #{printscreenPath,jdbcType=VARCHAR},
+      </if>
+      <if test="tester != null" >
+        #{tester,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateWTestreByIdSelective" parameterType="WTestre" >
+    update w_testres
+    <set >
+      <if test="testNumber != null" >
+        testNumber = #{testNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="planId != null" >
+        planId = #{planId,jdbcType=INTEGER},
+      </if>
+      <if test="suiteId != null" >
+        suiteId = #{suiteId,jdbcType=INTEGER},
+      </if>
+      <if test="caseId != null" >
+        caseId = #{caseId,jdbcType=INTEGER},
+      </if>
+      <if test="steepId != null" >
+        steepId = #{steepId,jdbcType=INTEGER},
+      </if>
+      <if test="useData != null" >
+        useData = #{useData,jdbcType=VARCHAR},
+      </if>
+      <if test="expected != null" >
+        expected = #{expected,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="actual != null" >
+        actual = #{actual,jdbcType=VARCHAR},
+      </if>
+      <if test="testTime != null" >
+        testTime = #{testTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bugId != null" >
+        bugId = #{bugId,jdbcType=INTEGER},
+      </if>
+      <if test="printscreenPath != null" >
+        printscreenPath = #{printscreenPath,jdbcType=VARCHAR},
+      </if>
+      <if test="tester != null" >
+        tester = #{tester,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        priority = #{priority,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateWTestreById" parameterType="WTestre" >
+    update w_testres
+    set testNumber = #{testNumber,jdbcType=VARCHAR},
+      planId = #{planId,jdbcType=INTEGER},
+      suiteId = #{suiteId,jdbcType=INTEGER},
+      caseId = #{caseId,jdbcType=INTEGER},
+      steepId = #{steepId,jdbcType=INTEGER},
+      useData = #{useData,jdbcType=VARCHAR},
+      expected = #{expected,jdbcType=VARCHAR},
+      result = #{result,jdbcType=INTEGER},
+      actual = #{actual,jdbcType=VARCHAR},
+      testTime = #{testTime,jdbcType=TIMESTAMP},
+      bugId = #{bugId,jdbcType=INTEGER},
+      printscreenPath = #{printscreenPath,jdbcType=VARCHAR},
+      tester = #{tester,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+	
+</mapper>

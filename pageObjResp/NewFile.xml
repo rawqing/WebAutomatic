@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<elements xmlns="http://www.example.org/pageobject" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.example.org/pageobject pageobject.xsd ">
+  
+  <element name="立即登陆" type="linkText" tag="button">立即登录</element>
+  <element name="用户名" type="id" tag="input" description="用户名输入框">loginName</element>
+  <element name="密码" type="id" tag="input" description="密码输入框">password</element>
+  <element name="登录" type="id" tag="button" description="登录按钮">loginBtn</element>
+  
+</elements>

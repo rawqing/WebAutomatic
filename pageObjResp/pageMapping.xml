@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pages xmlns="http://www.example.org/pageSchema" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://www.example.org/pageSchema pageSchema.xsd ">
+		
+  <pageMapping pageName="登录">NewFile.xml</pageMapping>
+  <pageMapping pageName="首页"></pageMapping>
+  <pageMapping pageName="123"></pageMapping>
+</pages>

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rawq.autoweb.service.IWZentaobug" >
+  <resultMap id="BaseResultMap" type="WZentaobug" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="product" property="product" jdbcType="VARCHAR" />
+    <result column="module" property="module" jdbcType="VARCHAR" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="openedBuild" property="openedBuild" jdbcType="VARCHAR" />
+    <result column="assignedTo" property="assignedTo" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="os" property="os" jdbcType="VARCHAR" />
+    <result column="browser" property="browser" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="severity" property="severity" jdbcType="VARCHAR" />
+    <result column="pri" property="pri" jdbcType="VARCHAR" />
+    <result column="story" property="story" jdbcType="VARCHAR" />
+    <result column="task" property="task" jdbcType="VARCHAR" />
+    <result column="mailto" property="mailto" jdbcType="VARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="files" property="files" jdbcType="VARCHAR" />
+    <result column="labels" property="labels" jdbcType="VARCHAR" />
+    <result column="case_" property="case_" jdbcType="VARCHAR" />
+    <result column="caseVersion" property="caseVersion" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="testtask" property="testtask" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="WZentaobug" extends="BaseResultMap" >
+    <result column="steps" property="steps" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, product, module, project, openedBuild, assignedTo, type, os, browser, title, 
+    severity, pri, story, task, mailto, keywords, files, labels, case_, caseVersion, 
+    result, testtask, createtime
+  </sql>
+  <sql id="Blob_Column_List" >
+    steps
+  </sql>
+  <select id="getWZentaobugById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from w_zentaobug
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from w_zentaobug
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="addWZentaobug" parameterType="WZentaobug" useGeneratedKeys="true" keyProperty="id">
+    insert into w_zentaobug (id, product, module, 
+      project, openedBuild, assignedTo, 
+      type, os, browser, 
+      title, severity, pri, 
+      story, task, mailto, 
+      keywords, files, labels, 
+      case_, caseVersion, result, 
+      testtask, createtime, steps
+      )
+    values (#{id,jdbcType=INTEGER}, #{product,jdbcType=VARCHAR}, #{module,jdbcType=VARCHAR}, 
+      #{project,jdbcType=VARCHAR}, #{openedBuild,jdbcType=VARCHAR}, #{assignedTo,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{os,jdbcType=VARCHAR}, #{browser,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{severity,jdbcType=VARCHAR}, #{pri,jdbcType=VARCHAR}, 
+      #{story,jdbcType=VARCHAR}, #{task,jdbcType=VARCHAR}, #{mailto,jdbcType=VARCHAR}, 
+      #{keywords,jdbcType=VARCHAR}, #{files,jdbcType=VARCHAR}, #{labels,jdbcType=VARCHAR}, 
+      #{case_,jdbcType=VARCHAR}, #{caseVersion,jdbcType=VARCHAR}, #{result,jdbcType=VARCHAR}, 
+      #{testtask,jdbcType=VARCHAR}, NOW(), #{steps,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="addWZentaobugSelective" parameterType="WZentaobug" useGeneratedKeys="true" keyProperty="id">
+    insert into w_zentaobug
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="product != null" >
+        product,
+      </if>
+      <if test="module != null" >
+        module,
+      </if>
+      <if test="project != null" >
+        project,
+      </if>
+      <if test="openedBuild != null" >
+        openedBuild,
+      </if>
+      <if test="assignedTo != null" >
+        assignedTo,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="os != null" >
+        os,
+      </if>
+      <if test="browser != null" >
+        browser,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="severity != null" >
+        severity,
+      </if>
+      <if test="pri != null" >
+        pri,
+      </if>
+      <if test="story != null" >
+        story,
+      </if>
+      <if test="task != null" >
+        task,
+      </if>
+      <if test="mailto != null" >
+        mailto,
+      </if>
+      <if test="keywords != null" >
+        keywords,
+      </if>
+      <if test="files != null" >
+        files,
+      </if>
+      <if test="labels != null" >
+        labels,
+      </if>
+      <if test="case_ != null" >
+        case_,
+      </if>
+      <if test="caseVersion != null" >
+        caseVersion,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="testtask != null" >
+        testtask,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="steps != null" >
+        steps,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="product != null" >
+        #{product,jdbcType=VARCHAR},
+      </if>
+      <if test="module != null" >
+        #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="openedBuild != null" >
+        #{openedBuild,jdbcType=VARCHAR},
+      </if>
+      <if test="assignedTo != null" >
+        #{assignedTo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null" >
+        #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null" >
+        #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="severity != null" >
+        #{severity,jdbcType=VARCHAR},
+      </if>
+      <if test="pri != null" >
+        #{pri,jdbcType=VARCHAR},
+      </if>
+      <if test="story != null" >
+        #{story,jdbcType=VARCHAR},
+      </if>
+      <if test="task != null" >
+        #{task,jdbcType=VARCHAR},
+      </if>
+      <if test="mailto != null" >
+        #{mailto,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="files != null" >
+        #{files,jdbcType=VARCHAR},
+      </if>
+      <if test="labels != null" >
+        #{labels,jdbcType=VARCHAR},
+      </if>
+      <if test="case_ != null" >
+        #{case_,jdbcType=VARCHAR},
+      </if>
+      <if test="caseVersion != null" >
+        #{caseVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="testtask != null" >
+        #{testtask,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="steps != null" >
+        #{steps,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateWZentaobugByIdSelective" parameterType="WZentaobug" >
+    update w_zentaobug
+    <set >
+      <if test="product != null" >
+        product = #{product,jdbcType=VARCHAR},
+      </if>
+      <if test="module != null" >
+        module = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="openedBuild != null" >
+        openedBuild = #{openedBuild,jdbcType=VARCHAR},
+      </if>
+      <if test="assignedTo != null" >
+        assignedTo = #{assignedTo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="os != null" >
+        os = #{os,jdbcType=VARCHAR},
+      </if>
+      <if test="browser != null" >
+        browser = #{browser,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="severity != null" >
+        severity = #{severity,jdbcType=VARCHAR},
+      </if>
+      <if test="pri != null" >
+        pri = #{pri,jdbcType=VARCHAR},
+      </if>
+      <if test="story != null" >
+        story = #{story,jdbcType=VARCHAR},
+      </if>
+      <if test="task != null" >
+        task = #{task,jdbcType=VARCHAR},
+      </if>
+      <if test="mailto != null" >
+        mailto = #{mailto,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="files != null" >
+        files = #{files,jdbcType=VARCHAR},
+      </if>
+      <if test="labels != null" >
+        labels = #{labels,jdbcType=VARCHAR},
+      </if>
+      <if test="case_ != null" >
+        case_ = #{case_,jdbcType=VARCHAR},
+      </if>
+      <if test="caseVersion != null" >
+        caseVersion = #{caseVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="testtask != null" >
+        testtask = #{testtask,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="steps != null" >
+        steps = #{steps,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateWZentaobugByIdWithBLOBs" parameterType="WZentaobug" >
+    update w_zentaobug
+    set product = #{product,jdbcType=VARCHAR},
+      module = #{module,jdbcType=VARCHAR},
+      project = #{project,jdbcType=VARCHAR},
+      openedBuild = #{openedBuild,jdbcType=VARCHAR},
+      assignedTo = #{assignedTo,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      severity = #{severity,jdbcType=VARCHAR},
+      pri = #{pri,jdbcType=VARCHAR},
+      story = #{story,jdbcType=VARCHAR},
+      task = #{task,jdbcType=VARCHAR},
+      mailto = #{mailto,jdbcType=VARCHAR},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      files = #{files,jdbcType=VARCHAR},
+      labels = #{labels,jdbcType=VARCHAR},
+      case_ = #{case_,jdbcType=VARCHAR},
+      caseVersion = #{caseVersion,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      testtask = #{testtask,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      steps = #{steps,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateWZentaobugById" parameterType="WZentaobug" >
+    update w_zentaobug
+    set product = #{product,jdbcType=VARCHAR},
+      module = #{module,jdbcType=VARCHAR},
+      project = #{project,jdbcType=VARCHAR},
+      openedBuild = #{openedBuild,jdbcType=VARCHAR},
+      assignedTo = #{assignedTo,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      os = #{os,jdbcType=VARCHAR},
+      browser = #{browser,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      severity = #{severity,jdbcType=VARCHAR},
+      pri = #{pri,jdbcType=VARCHAR},
+      story = #{story,jdbcType=VARCHAR},
+      task = #{task,jdbcType=VARCHAR},
+      mailto = #{mailto,jdbcType=VARCHAR},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      files = #{files,jdbcType=VARCHAR},
+      labels = #{labels,jdbcType=VARCHAR},
+      case_ = #{case_,jdbcType=VARCHAR},
+      caseVersion = #{caseVersion,jdbcType=VARCHAR},
+      result = #{result,jdbcType=VARCHAR},
+      testtask = #{testtask,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rawq.autoweb.service.IWElement">
+	
+    <select id="getWElementById" parameterType="int" resultMap="getWElement">
+        SELECT 
+			e.id as e_id,
+			e.pageID as e_pageID,
+			e.elememtName as e_elememtName,
+			e.description as e_description,
+			p.id as p_id,
+			p.alias as p_alias,
+			p.title as p_title,
+			p.uri as p_uri,
+			s.id as s_id,
+			s.elementID as s_elementID,
+			s.selector as s_selector,
+			s.selectPath as s_selectPath
+		from w_element e,w_page p ,w_selector s 
+		where p.id=e.pageID 
+			and e.id = s.elementID
+			and e.id = #{id}
+    </select>
+	<select id="getWElementByName" resultMap="getWElement">
+	    SELECT 
+			e.id as e_id,
+			e.pageID as e_pageID,
+			e.elememtName as e_elememtName,
+			e.description as e_description,
+			p.id as p_id,
+			p.alias as p_alias,
+			p.title as p_title,
+			p.uri as p_uri,
+			s.id as s_id,
+			s.elementID as s_elementID,
+			s.selector as s_selector,
+			s.selectPath as s_selectPath
+		from 
+			w_element e,w_page p ,w_selector s 
+		where 
+			p.id=e.pageID 
+			and e.id = s.elementID
+			and e.elememtName=#{1}
+			and p.alias=#{0} 
+			</select>
+	
+	<resultMap type="WElement" id="getWElement">
+	    <id property="id" column="e_id"/>
+	    <result property="pageID" column="e_pageID"/>
+	    <result property="elememtName" column="e_elememtName"/>
+	    <result property="description" column="e_description"/>
+	    <association property="wPage" javaType="WPage">
+	        <id property="id" column="p_id"/>
+	        <result property="alias" column="p_alias"/>
+	        <result property="title" column="p_title"/>
+	        <result property="uri" column="p_uri"/>
+	    </association>
+	    <collection property="wSelectors" ofType="WSelector">
+	        <id property="id" column="s_id"/>
+	        <result property="elementID" column="s_elementID"/>
+	        <result property="selector" column="s_selector"/>
+	        <result property="selectPath" column="s_selectPath"/>
+	    </collection>
+	</resultMap>
+	
+	<select id="getWElementIdByName" resultType="int">
+	    SELECT 
+			e.id as e_id
+		from w_element e,w_page p
+		where p.id=e.pageID 
+			and e.elememtName=#{1}
+			and p.alias=#{0} 
+	</select>
+	
+	<insert id="addWElement" parameterType="WElement" useGeneratedKeys="true" keyProperty="id">
+	    insert into 
+			w_element(
+				pageID,
+				elememtName,
+				description) 
+			values(
+				#{pageID},
+				#{elememtName},
+				#{description})
+	</insert>
+	<insert id="addWSelector" parameterType="WSelector">
+	    insert into 
+			w_selector(
+				elementID,
+				selector,
+				selectPath) 
+			values(
+				#{elementID},
+				#{selector},
+				#{selectPath})
+	</insert>
+	
+	<insert id="addWSelectorList" parameterType="WSelector">
+	    insert into 
+			w_selector(
+				elementID,
+				selector,
+				selectPath) 
+			values
+			<foreach collection="list" item="item" separator=",">
+			   (#{item.elementID},
+				#{item.selector},
+				#{item.selectPath})
+			</foreach>
+	</insert>
+</mapper>

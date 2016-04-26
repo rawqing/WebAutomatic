@@ -1,0 +1,13 @@
+@CHARSET "UTF-8";
+body {
+	color: #000;
+	font-size: 12px;
+	font-family: "Helvetica Neue",Helvetica,STheiti,微软雅黑,宋体,Arial,Tahoma,sans-serif,serif;
+}
+#head{
+	width:100%;
+	height:60px;
+	background-color:#4b9de7;
+	border:1px solid silver;
+	text-align:center;
+}
