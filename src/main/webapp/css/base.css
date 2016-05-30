@@ -11,3 +11,16 @@ body {
 	border:1px solid silver;
 	text-align:center;
 }
+#navigation{
+	width:30%;
+	height:100%;
+	
+	/*border:1px solid silver;*/
+	text-align:center;
+}
+.project{
+	width:70px;
+	height:40px;
+	border:1px solid silver;
+	background-color:#4b9de7;
+}

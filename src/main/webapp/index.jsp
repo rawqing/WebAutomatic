@@ -5,14 +5,14 @@
 	
 <html>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Web 自动化测试平台</title>
+	<title>自动化测试平台</title>
 	<link rel="stylesheet" type="text/css" href="./css/base.css"/>
 <body>
 	<div id="head">
 		<h3>HELLO</h3>
 	</div>
-	<div id="navigation">
-		<span></span>
+	<div id="navigation" >
+		<span class="project"><a href="./jsp/pageObject.jsp">对象篇</a></span>
 	</div>
 	
 </body>
